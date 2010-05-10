@@ -31,7 +31,16 @@ public class DryadeWriter {
         File dir = file.getParentFile();
         dir.mkdirs();
         this.file = file;
-        this.dryade = new Dryade();
+        Dryade dryade = new Dryade();
+        dryade.setup();
+        this.dryade = dryade;
+    }
+
+    public DryadeWriter(File file, Dryade dryade) {
+        File dir = file.getParentFile();
+        dir.mkdirs();
+        this.file = file;
+        this.dryade = dryade;
     }
 
     public void write() throws Exception {
@@ -48,7 +57,7 @@ public class DryadeWriter {
         g2.setStroke(new BasicStroke(0.1f));
 //    tp.setWidth(width);
 //    tp.setHeight(height);
-        dryade.setup();
+        //dryade.setup();
         dryade.draw(g2);
         System.out.println(dryade.lines + " lines written.");
         g2.dispose();

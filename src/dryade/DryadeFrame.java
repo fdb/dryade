@@ -6,6 +6,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
 import java.lang.reflect.Field;
 
 public class DryadeFrame extends JFrame {
@@ -15,7 +17,7 @@ public class DryadeFrame extends JFrame {
     public static void main(String[] args) {
         DryadeFrame frame = new DryadeFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1000, 600);
         frame.setVisible(true);
     }
 
@@ -31,8 +33,25 @@ public class DryadeFrame extends JFrame {
         controlsPanel.add(new MetaSlider("stepSize"));
         controlsPanel.add(new MetaSlider("stepDecrease"));
         controlsPanel.add(new MetaSlider("angle"));
+        controlsPanel.add(new ExportButton());
         add(controlsPanel, BorderLayout.SOUTH);
 
+    }
+
+    class ExportButton extends JButton implements ActionListener {
+        ExportButton() {
+            super("Export");
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            DryadeWriter writer = new DryadeWriter(new File("out/dryade.pdf"), dryade);
+            try {
+                writer.write();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     class MetaField extends JPanel implements DocumentListener {
@@ -137,19 +156,57 @@ public class DryadeFrame extends JFrame {
         }
     }
 
-    class DryadeView extends Panel {
+    class DryadeView extends Panel implements MouseListener, MouseMotionListener {
+
+        public int ox, oy;
+        public int cx = 0, cy = -300;
 
         public DryadeView() {
+            addMouseListener(this);
+            addMouseMotionListener(this);
         }
+
+
 
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
+            g2.translate(cx, cy);
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             Rectangle clip = g2.getClipBounds();
             g2.setColor(Color.WHITE);
             g2.fillRect(clip.x, clip.y, clip.width, clip.height);
             g2.setColor(Color.BLACK);
             dryade.draw(g2);
+        }
+
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        public void mousePressed(MouseEvent e) {
+            ox = e.getX();
+            oy = e.getY();
+        }
+
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
+
+        public void mouseDragged(MouseEvent e) {
+            int dx = e.getX() - ox;
+            int dy = e.getY() - oy;
+            cx += dx;
+            cy += dy;
+            ox = e.getX();
+            oy = e.getY();
+            repaint();
+        }
+
+        public void mouseMoved(MouseEvent e) {
         }
     }
 }
