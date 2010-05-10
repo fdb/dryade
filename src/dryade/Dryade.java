@@ -38,7 +38,7 @@ public class Dryade {
     }
 
     void draw(Graphics2D g2) {
-        //g2.setColor(new Color(0, 0, 0, 0.2f));
+        g2.setColor(new Color(0, 0, 0, 0.2f));
         radiansAngle = angle * PI / 180;
         Rectangle clip = g2.getClipBounds();
         float width = clip.width;
@@ -56,10 +56,7 @@ public class Dryade {
     }
 
     void drawLetter(Graphics2D g2, String text, double stepSize, int curDepth) {
-        GeneralPath p = new GeneralPath();
-        p.moveTo(0, 0);
-        p.lineTo(0, stepSize);
-        //Rectangle2D p = new Rectangle2D.Double(0f, 0f, stepSize, stepSize);
+        Rectangle2D p = new Rectangle2D.Double(0f, 0f, stepSize, stepSize);
         char myLetter = text.toCharArray()[0];
         char[] myRule = rule[myLetter];
         int posInRule = 0;
@@ -67,7 +64,7 @@ public class Dryade {
             char command = myRule[posInRule];
             switch (command) {
                 case 'F':
-                    g2.draw(p);
+                    g2.fill(p);
                     lines++;
                     g2.translate(0, stepSize);
                     if (text.length() > 1) {
