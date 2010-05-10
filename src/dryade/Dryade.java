@@ -8,6 +8,7 @@ public class Dryade {
     public double stepSize; // The initial length of one 'F' segment
     public double stepDecrease; // How much shorter the line gets in the next recursion level
     public double angle; // The initial angle of one '+' or '-' operation.
+    public double radiansAngle;
     public long lines; // number of lines generated
     char[][] rule = new char[255][];
     public String prodText;
@@ -26,18 +27,19 @@ public class Dryade {
         prodText = "DRYA";
         stepSize = 90; // The initial length of one 'F' segment
         stepDecrease = 3; // How much shorter the line gets in the next recursion level
-        angle = PI / 8; // The initial angle of one '+' or '-' operation.
+        angle = 22.5; // The initial angle of one '+' or '-' operation.
         lines = 0; // number of lines generated
     }
 
     void draw(Graphics2D g2) {
+        radiansAngle = angle * PI/180;
         Rectangle clip = g2.getClipBounds();
         float width = clip.width;
         float height = clip.height;
         transX = 190;
         transY = height - 100;
         g2.translate(transX, transY);
-        g2.rotate(-PI);
+        g2.rotate(-PI/2);
         drawLetter(g2, prodText, stepSize, 0);
     }
 
@@ -54,20 +56,18 @@ public class Dryade {
                         drawLetter(g2, text.substring(1), stepSize / stepDecrease, curDepth + 1);
                         g2.setTransform((AffineTransform) transformQueue.pop());
                     }
-                    if (curDepth > 0) {
                         g2.drawLine(0, 0, 0, (int) Math.ceil(stepSize));
                         lines++;
-                    }
                     g2.translate(0, stepSize);
                     break;
                 case 'G':
                     g2.translate(0, stepSize);
                     break;
                 case '+':
-                    g2.rotate(angle);
+                    g2.rotate(radiansAngle);
                     break;
                 case '-':
-                    g2.rotate(-angle);
+                    g2.rotate(-radiansAngle);
                     break;
                 case '|':
                     g2.rotate(PI);
