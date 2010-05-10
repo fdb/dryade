@@ -34,8 +34,11 @@ public class DryadeFrame extends JFrame {
         controlsPanel.add(new MetaSlider("stepDecrease"));
         controlsPanel.add(new MetaSlider("angle"));
         controlsPanel.add(new ExportButton());
+        controlsPanel.add(new ReloadButton());
         add(controlsPanel, BorderLayout.SOUTH);
-
+//        Timer t = new Timer(500, new ReloadButton());
+//        t.setRepeats(true);
+//        t.start();
     }
 
     class ExportButton extends JButton implements ActionListener {
@@ -207,6 +210,18 @@ public class DryadeFrame extends JFrame {
         }
 
         public void mouseMoved(MouseEvent e) {
+        }
+    }
+
+       class ReloadButton extends JButton implements ActionListener {
+        ReloadButton() {
+            super("Reload");
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            dryade.loadRules();
+            view.repaint();
         }
     }
 }
