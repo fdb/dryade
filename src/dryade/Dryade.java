@@ -15,6 +15,8 @@ public class Dryade {
     public double stepDecrease; // How much shorter the line gets in the next recursion level
     public double angle; // The initial angle of one '+' or '-' operation.
     public double radiansAngle;
+    public boolean blocks = true;
+    public boolean filled = true;
     public long lines; // number of lines generated
     char[][] rule = new char[255][];
     public String prodText;
@@ -30,7 +32,7 @@ public class Dryade {
 
     void setup() {
         loadRules();
-        prodText = "EEE";
+        prodText = "R";
         stepSize = 90; // The initial length of one 'F' segment
         stepDecrease = 3; // How much shorter the line gets in the next recursion level
         angle = 90; // The initial angle of one '+' or '-' operation.
@@ -38,7 +40,11 @@ public class Dryade {
     }
 
     void draw(Graphics2D g2) {
-        g2.setColor(new Color(0, 0, 0, 0.2f));
+        if (filled) {
+            g2.setColor(new Color(0, 0, 0, 0.15f));
+        } else {
+            g2.setColor(new Color(0, 0, 0, 0.4f));
+        }
         radiansAngle = angle * PI / 180;
         Rectangle clip = g2.getClipBounds();
         float width = clip.width;
@@ -56,7 +62,14 @@ public class Dryade {
     }
 
     void drawLetter(Graphics2D g2, String text, double stepSize, int curDepth) {
-        Rectangle2D p = new Rectangle2D.Double(0f, 0f, stepSize, stepSize);
+        Shape p;
+        if (blocks) {
+            p = new Rectangle2D.Double(0, 0, stepSize, stepSize);
+        } else {
+            p = new GeneralPath();
+            ((GeneralPath) p).moveTo(0, 0);
+            ((GeneralPath) p).lineTo(0, stepSize);
+        }
         char myLetter = text.toCharArray()[0];
         char[] myRule = rule[myLetter];
         int posInRule = 0;
@@ -64,7 +77,11 @@ public class Dryade {
             char command = myRule[posInRule];
             switch (command) {
                 case 'F':
-                    g2.fill(p);
+                    if (filled) {
+                        g2.fill(p);
+                    } else {
+                        g2.draw(p);
+                    }
                     lines++;
                     g2.translate(0, stepSize);
                     if (text.length() > 1) {

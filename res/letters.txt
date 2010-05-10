@@ -1,7 +1,9 @@
 D = [-FF[-F][+FF+FFFF+FF+FFFF-F]][+FF[+F][-FF-FFFF-FF-FFFF+F]]
-R = F+F
+R = [+FFFF][FF+FF+FF--F+F-F+F]
 Y = F
-A = F
-#E = -FFFFF+FFF+F+FF-F-F+F+F-F-FF+F+FFF
+A = F[+F+F-FF+F-F[-FF]F+F-FF][+F-F+FF-F+F[+FF]F-F+FF]
+#A = F[+++FFFF[---FFF]FFFF][+FFFF[+++FFF]FFFF]
+E = -FFFFF+FFF+F+FF-F-F+F+F-F-FF+F+FFF
 #E = [-FFF+FFF+F+FF-F-F+F][+FF-FFF-F-FF+F+F]
-E = [FF][-FF+FF][+FF-FF]
+#E = [FF][-FF+FF][+FF-FF]
+

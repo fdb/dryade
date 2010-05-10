@@ -29,16 +29,20 @@ public class DryadeFrame extends JFrame {
         view = new DryadeView();
         add(view, BorderLayout.CENTER);
         JPanel controlsPanel = new JPanel();
+        controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
         controlsPanel.add(new MetaField("prodText"));
         controlsPanel.add(new MetaSlider("stepSize"));
         controlsPanel.add(new MetaSlider("stepDecrease"));
         controlsPanel.add(new MetaSlider("angle"));
+        controlsPanel.add(new BlocksCheck());
+        controlsPanel.add(new FilledCheck());
         controlsPanel.add(new ExportButton());
         controlsPanel.add(new ReloadButton());
-        add(controlsPanel, BorderLayout.SOUTH);
-//        Timer t = new Timer(500, new ReloadButton());
-//        t.setRepeats(true);
-//        t.start();
+        controlsPanel.add(Box.createVerticalGlue());
+        add(controlsPanel, BorderLayout.EAST);
+        Timer t = new Timer(500, new ReloadButton());
+        t.setRepeats(true);
+        t.start();
     }
 
     class ExportButton extends JButton implements ActionListener {
@@ -221,6 +225,32 @@ public class DryadeFrame extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             dryade.loadRules();
+            view.repaint();
+        }
+    }
+
+    class BlocksCheck extends JCheckBox implements ActionListener {
+        BlocksCheck() {
+            super("Blocks");
+            setSelected(true);
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            dryade.blocks = isSelected();
+            view.repaint();
+        }
+    }
+
+    class FilledCheck extends JCheckBox implements ActionListener {
+        FilledCheck() {
+            super("Filled");
+            setSelected(true);
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            dryade.filled = isSelected();
             view.repaint();
         }
     }
