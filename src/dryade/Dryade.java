@@ -62,6 +62,7 @@ public class Dryade {
     }
 
     void drawLetter(Graphics2D g2, String text, double stepSize, int curDepth) {
+
         Shape p;
         if (blocks) {
             p = new Rectangle2D.Double(0, 0, stepSize, stepSize);
@@ -77,6 +78,7 @@ public class Dryade {
             char command = myRule[posInRule];
             switch (command) {
                 case 'F':
+                    g2.setStroke(new BasicStroke(2/(curDepth+1f)));
                     if (filled) {
                         g2.fill(p);
                     } else {
