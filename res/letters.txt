@@ -1,9 +1,20 @@
-D = [-FF[-F][+FF+FFFF+FF+FFFF-F]][+FF[+F][-FF-FFFF-FF-FFFF+F]]
-R = [+FFFF][FF+FF+FF--F+F-F+F]
-Y = F
-A = F[+F+F-FF+F-F[-FF]F+F-FF][+F-F+FF-F+F[+FF]F-F+FF]
+#R = [+FFFF][FF+FF+FF--F+F-F+F]
+#R = [--FF[--F][++FF++FF++FF[+++++FFF]]][++FF]
+#Y = [++FF][---F+F[----F-F+FF]][-F-F[++++F+F-FF]]
+
+#A = F[+F+F-FF+F-F[-FF]F+F-FF][+F-F+FF-F+F[+FF]F-F+FF]
+#A = [FF[--F-FF-F][++FFF]][|FF[++F+FF+F][--FFF]]
+#A = [FF[-FF-FF][+FF]][|FF[+FF+FF][-FF]]
+
 #A = F[+++FFFF[---FFF]FFFF][+FFFF[+++FFF]FFFF]
-E = -FFFFF+FFF+F+FF-F-F+F+F-F-FF+F+FFF
+#E = -FFFFF+FFF+F+FF-F-F+F+F-F-FF+F+FFF
 #E = [-FFF+FFF+F+FF-F-F+F][+FF-FFF-F-FF+F+F]
 #E = [FF][-FF+FF][+FF-FF]
+#E = [-FF[-F][+FF]][+FF[+F][-FF]][FF]
 
+# Overlaying
+D = [-FF[-F][+FF+FFFF+FF+FFFF-F]][+FF[+F][-FF-FFFF-FF-FFFF+F]]
+R = [-FF[-F][+FF+FF+FF+FF[-F][++FFFF]]][+FF][F+F-F+F][FF-FF-FFF]
+Y = [|F+FF[++FF-F+FF]][F-FF[--FF+F-FF]][+FF++FF[-F+FF][+F-FF]]
+A = [|F[+FF+FF+FF[+FF]FF][-FF]][F[+FF][-FF-FF-FF[-FF]FF]]
+E = [-FF[-F]+FF--FF[F]-FF[-F]FF-FF][+FF[+F]-FF++FF[F]+FF[+F]FF+FF]
