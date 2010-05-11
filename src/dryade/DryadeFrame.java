@@ -40,9 +40,15 @@ public class DryadeFrame extends JFrame {
         controlsPanel.add(new ReloadButton());
         controlsPanel.add(Box.createVerticalGlue());
         add(controlsPanel, BorderLayout.EAST);
-        Timer t = new Timer(500, new ReloadButton());
-        t.setRepeats(true);
-        t.start();
+        addWindowListener(new ReloadingWindowAdapter());
+    }
+
+    class ReloadingWindowAdapter extends WindowAdapter {
+        @Override
+        public void windowActivated(WindowEvent e) {
+            dryade.loadRules();
+            view.repaint();
+        }
     }
 
     class ExportButton extends JButton implements ActionListener {
